@@ -24,5 +24,7 @@ jobs:
         run: npm run lint
       - name: Rule tests
         run: npm run test:rules
+      - name: Slop score
+        run: npm run slop-score
       - name: Typecheck and build
         run: npm run build

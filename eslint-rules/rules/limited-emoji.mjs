@@ -13,13 +13,14 @@ const rule = {
   create(context) {
     const max = context.options[0]?.max ?? 0;
     let count = 0;
+    // One report per emoji over the limit, so counts (and the slop score) are exact.
     function check(node, text) {
       const found = text.match(EMOJI)?.length ?? 0;
-      if (!found) return;
-      const before = count;
-      count += found;
-      if (count > max && before + found > max) {
-        context.report({ node, messageId: max === 0 ? "none" : "tooMany", data: { count, max } });
+      for (let i = 0; i < found; i++) {
+        count += 1;
+        if (count > max) {
+          context.report({ node, messageId: max === 0 ? "none" : "tooMany", data: { count, max } });
+        }
       }
     }
     return {
