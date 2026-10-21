@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, uat]
+  push:
+    branches: [main, uat, "feature/**"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      # Placeholders so the build can compile; no Supabase calls happen at build time.
+      NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Slop lint
+        run: npm run lint
+      - name: Rule tests
+        run: npm run test:rules
+      - name: Typecheck and build
+        run: npm run build
