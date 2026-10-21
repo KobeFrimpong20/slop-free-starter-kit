@@ -1,90 +1,67 @@
-const neutralSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const accentSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+// Deliberately sloppy baseline: what an unguided AI landing page looks like.
+// Kept as "before" evidence for the lint rules and callouts. Do not fix.
 
-export default function Home() {
+const features = [
+  { icon: "🚀", title: "Lightning Fast", body: "Blazing fast performance that scales with your business." },
+  { icon: "🔒", title: "Secure by Default", body: "Enterprise-grade security you can trust." },
+  { icon: "✨", title: "AI-Powered", body: "Harness the power of AI to supercharge your workflow." },
+];
+
+const testimonials = [
+  { name: "Sarah Johnson", role: "CEO, TechCorp", quote: "This product completely transformed how we work. Highly recommend!" },
+  { name: "Michael Chen", role: "CTO, StartupXYZ", quote: "Absolutely game-changing. We saved 10x the time." },
+];
+
+export default function SlopDraft() {
   return (
-    <main className="mx-auto flex max-w-3xl flex-1 flex-col gap-16 px-6 py-24">
-      <header className="flex flex-col gap-3">
-        <p className="font-accent text-xs uppercase tracking-widest text-muted-foreground">
-          Design tokens
-        </p>
-        <h1 className="font-heading text-5xl text-foreground">
-          Production Launchpad
+    <div style={{ fontFamily: "Inter, sans-serif" }} className="bg-white text-gray-900">
+      <section className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-32 text-center text-white">
+        <h1 style={{ fontFamily: "Inter, sans-serif" }} className="text-6xl font-extrabold">
+          Supercharge Your Workflow 🚀
         </h1>
-        <p className="max-w-lg font-body text-lg text-muted-foreground">
-          A token preview, not the landing page. Heading, body, and accent
-          type, plus the neutral and accent color ramps, so we can eyeball
-          the system before building real screens.
+        <p className="mx-auto mt-6 max-w-2xl text-xl opacity-90">
+          The all-in-one platform that empowers teams to unlock their full potential and take
+          their business to the next level.
         </p>
-      </header>
+        <button className="mt-10 rounded-full bg-white px-8 py-4 font-semibold text-purple-600 shadow-xl">
+          Get Started Free ✨
+        </button>
+      </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="font-heading text-2xl text-foreground">Typeface roles</h2>
-        <div className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-6">
-          <p className="font-heading text-3xl text-foreground">
-            Lora sets every heading
-          </p>
-          <p className="font-body text-base text-foreground">
-            Work Sans carries all body copy, UI labels, and buttons. It should
-            never appear in a heading, and Lora should never appear in a
-            paragraph.
-          </p>
-          <p className="font-accent text-sm text-accent">
-            IBM Plex Mono — reserved for code, data, and numeric callouts
-          </p>
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <h2 className="text-center text-4xl font-bold">Everything you need 🎯</h2>
+        <div className="mt-12 rounded-3xl bg-gray-50 p-8 shadow-lg">
+          <div className="grid gap-6 md:grid-cols-3">
+            {features.map((f) => (
+              <div key={f.title} className="rounded-2xl bg-white p-6 shadow-md">
+                <div className="rounded-xl bg-purple-100 p-4 text-3xl">{f.icon}</div>
+                <h3 className="mt-4 text-xl font-semibold">{f.title}</h3>
+                <p className="mt-2 text-gray-600">{f.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="font-heading text-2xl text-foreground">Neutral scale (warm gray)</h2>
-        <div className="grid grid-cols-11 overflow-hidden rounded-lg border border-border">
-          {neutralSteps.map((step) => (
-            <div
-              key={step}
-              className="flex h-16 items-end justify-center pb-1"
-              style={{
-                backgroundColor: `var(--color-neutral-${step})`,
-                color: step >= 500 ? "var(--color-neutral-50)" : "var(--color-neutral-700)",
-              }}
-            >
-              <span className="font-accent text-[10px]">{step}</span>
+      <section className="bg-gray-50 px-6 py-24">
+        <h2 className="text-center text-4xl font-bold">Loved by 10,000+ teams ❤️</h2>
+        <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+          {testimonials.map((t) => (
+            <div key={t.name} className="rounded-2xl bg-white p-6 shadow-md">
+              <p className="text-gray-700">&ldquo;{t.quote}&rdquo;</p>
+              <p className="mt-4 font-semibold">{t.name}</p>
+              <p className="text-sm text-gray-500">{t.role}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="font-heading text-2xl text-foreground">Accent scale (navy)</h2>
-        <div className="grid grid-cols-11 overflow-hidden rounded-lg border border-border">
-          {accentSteps.map((step) => (
-            <div
-              key={step}
-              className="flex h-16 items-end justify-center pb-1"
-              style={{
-                backgroundColor: `var(--color-accent-${step})`,
-                color: step >= 500 ? "var(--color-accent-50)" : "var(--color-accent-700)",
-              }}
-            >
-              <span className="font-accent text-[10px]">{step}</span>
-            </div>
-          ))}
-        </div>
+      <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-500 px-6 py-24 text-center text-white">
+        <h2 className="text-4xl font-bold">Ready to get started? 🎉</h2>
+        <p className="mt-4">
+          Questions? Email hello@example.com or call (555) 123-4567.
+        </p>
       </section>
-
-      <section className="flex flex-col gap-4">
-        <h2 className="font-heading text-2xl text-foreground">Shape &amp; interactive states</h2>
-        <div className="flex flex-wrap items-center gap-4">
-          <button className="rounded-md bg-accent px-5 py-2.5 font-body text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover">
-            Primary action
-          </button>
-          <button className="rounded-md border border-border bg-surface px-5 py-2.5 font-body text-sm font-medium text-foreground transition-colors hover:bg-neutral-100">
-            Secondary action
-          </button>
-          <span className="rounded-sm bg-accent-subtle px-3 py-1 font-body text-xs font-medium text-accent-700">
-            Soft tag
-          </span>
-        </div>
-      </section>
-    </main>
+    </div>
   );
 }
