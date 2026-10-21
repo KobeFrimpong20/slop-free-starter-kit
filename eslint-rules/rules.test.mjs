@@ -124,6 +124,55 @@ tester.run("no-massive-shadows", plugin.rules["no-massive-shadows"], {
   ],
 });
 
+tester.run("specific-cta", plugin.rules["specific-cta"], {
+  valid: [
+    `const a = <Button>Clone the starter</Button>;`,
+    `const a = <Link href="/signup" className={buttonStyles("primary")}>Sign up</Link>;`,
+    `const a = <a href="/docs">Learn more</a>;`,
+    `const a = <button>Book a demo</button>;`,
+    { code: `const a = <Button>Continue</Button>;`, options: [{ allow: ["continue"] }] },
+  ],
+  invalid: [
+    { code: `const a = <button>Get Started Free</button>;`, errors: [{ messageId: "generic" }] },
+    { code: `const a = <Button variant="secondary">Learn more →</Button>;`, errors: [{ messageId: "generic" }] },
+    { code: `const a = <Link href="#x" className={buttonStyles("primary")}>Get started</Link>;`, errors: [{ messageId: "generic" }] },
+    { code: `const a = <a href="#x" className="rounded-md bg-accent px-4">Click <b>here</b></a>;`, errors: [{ messageId: "generic" }] },
+    { code: `const a = <Button>Upgrade</Button>;`, options: [{ banned: ["upgrade"] }], errors: [{ messageId: "generic" }] },
+  ],
+});
+
+tester.run("no-shouty-quotes", plugin.rules["no-shouty-quotes"], {
+  valid: [
+    `const t = [{ quote: "This kit saved me a week of fiddling with fonts. Worth it." }];`,
+    `const a = <blockquote>We shipped our launch page in an afternoon, with Supabase auth.</blockquote>;`,
+    `const t = { quote: "Not In An Array Of Testimonials" };`,
+    `const t = [{ quote: "Great!" }];`,
+  ],
+  invalid: [
+    { code: `const t = [{ quote: "This Product Completely Transformed How We Work." }];`, errors: [{ messageId: "titleCase" }] },
+    { code: `const t = [{ testimonial: "ABSOLUTELY GAME-CHANGING FOR OUR TEAM" }];`, errors: [{ messageId: "allCaps" }] },
+    { code: `const a = <blockquote>Best Purchase We Have Made This Year</blockquote>;`, errors: [{ messageId: "titleCase" }] },
+    { code: `const a = <q className="uppercase">great product</q>;`, errors: [{ messageId: "allCaps" }] },
+  ],
+});
+
+tester.run("no-fade-animations", plugin.rules["no-fade-animations"], {
+  valid: [
+    jsx("transition-opacity hover:opacity-80"),
+    `const a = <div role="dialog" className="animate-in fade-in" />;`,
+    `const a = <dialog><div className="animate-fade-in" /></dialog>;`,
+    `const a = <motion.div animate={{ x: 10 }} />;`,
+    `const a = <div data-aos="zoom-in" />;`,
+  ],
+  invalid: [
+    { code: jsx("animate-fade-up"), errors: [{ messageId: "fade" }] },
+    { code: jsx("animate-in fade-in slide-in-from-bottom-4"), errors: [{ messageId: "fade" }] },
+    { code: jsx("motion-safe:animate-[fadeIn_1s_ease]"), errors: [{ messageId: "fade" }] },
+    { code: `const a = <section data-aos="fade-up" />;`, errors: [{ messageId: "fade" }] },
+    { code: `const a = <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} />;`, errors: [{ messageId: "fade" }] },
+  ],
+});
+
 describe("slop fixture", () => {
   const rules = Object.fromEntries(Object.keys(plugin.rules).map((r) => [`slop-free/${r}`, "error"]));
   const linter = new Linter();

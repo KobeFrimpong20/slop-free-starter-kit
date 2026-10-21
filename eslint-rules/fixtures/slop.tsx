@@ -8,8 +8,8 @@ const features = [
 ];
 
 const testimonials = [
-  { name: "Sarah Johnson", role: "CEO, TechCorp", quote: "This product completely transformed how we work. Highly recommend!" },
-  { name: "Michael Chen", role: "CTO, StartupXYZ", quote: "Absolutely game-changing. We saved 10x the time." },
+  { name: "Sarah Johnson", role: "CEO, TechCorp", quote: "This Product Completely Transformed How We Work. Highly Recommend!" },
+  { name: "Michael Chen", role: "CTO, StartupXYZ", quote: "Absolutely Game-Changing. We Saved 10x The Time." },
 ];
 
 export default function SlopDraft() {
@@ -28,7 +28,7 @@ export default function SlopDraft() {
         </button>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section data-aos="fade-up" className="mx-auto max-w-6xl px-6 py-24">
         <h2 className="text-center text-4xl font-bold">Everything you need 🎯</h2>
         <div className="mt-12 rounded-3xl bg-gray-50 p-8 shadow-lg">
           <div className="grid gap-6 md:grid-cols-3">
@@ -43,7 +43,7 @@ export default function SlopDraft() {
         </div>
       </section>
 
-      <section className="bg-gray-50 px-6 py-24">
+      <section className="animate-fade-up bg-gray-50 px-6 py-24">
         <h2 className="text-center text-4xl font-bold">Loved by 10,000+ teams ❤️</h2>
         <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
           {testimonials.map((t) => (

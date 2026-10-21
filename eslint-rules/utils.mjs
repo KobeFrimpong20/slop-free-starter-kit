@@ -45,3 +45,14 @@ export function* jsxAncestors(node) {
     if (p.type === "JSXElement") yield p;
   }
 }
+
+/** Visible text of a JSXElement: its text and string-literal children, recursively. */
+export function jsxText(element) {
+  let text = "";
+  for (const child of element.children ?? []) {
+    if (child.type === "JSXText") text += child.value;
+    else if (child.type === "JSXElement" || child.type === "JSXFragment") text += jsxText(child);
+    else if (child.type === "JSXExpressionContainer") text += collectStrings(child.expression).join("");
+  }
+  return text.replace(/\s+/g, " ").trim();
+}

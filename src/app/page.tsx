@@ -40,13 +40,31 @@ const rules = [
     slop: "A button floating on a shadow-xl, cards hovering on 50px of blur.",
     rule: "Nothing past shadow-lg. Custom shadows can blur 20px at most.",
   },
+  {
+    id: "specific-cta",
+    name: "Specific calls to action",
+    slop: "Get Started Free, Learn More, and Submit on every button.",
+    rule: "Button labels say what happens next. Vague stock phrases fail.",
+  },
+  {
+    id: "no-shouty-quotes",
+    name: "Sentence-case testimonials",
+    slop: "\u201cThis Product Completely Transformed How We Work.\u201d",
+    rule: "Quotes in Title Case or all caps fail. People don\u2019t talk in headlines.",
+  },
+  {
+    id: "no-fade-animations",
+    name: "No fade-in content",
+    slop: "Every section fades up as you scroll, so a fast scroll skips past blank space.",
+    rule: "Page content shows immediately. Dialogs, menus and toasts may still fade.",
+  },
 ];
 
 const included = [
   { name: "Design tokens", body: "Colours, type, and radii defined once in globals.css. Components use token names, never raw values." },
   { name: "Font pairing", body: "Lora for headings, Work Sans for body copy, IBM Plex Mono for code and data." },
   { name: "Supabase auth", body: "Login, signup, and email confirmation with server actions, plus a users table behind row-level security." },
-  { name: "Lint guardrails", body: "Six ESLint rules that catch the slop tells before they ship, with tests against a real slop baseline." },
+  { name: "Lint guardrails", body: "Nine ESLint rules that catch the slop tells before they ship, with tests against a real slop baseline." },
 ];
 
 const steps = [
@@ -98,7 +116,7 @@ export default function Home() {
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="#get-started" className={buttonStyles("primary")}>
-              Get started
+              Clone the starter
             </a>
             <a href={repoUrl} className={buttonStyles("secondary")}>
               View on GitHub
@@ -108,7 +126,7 @@ export default function Home() {
 
         <section id="rules" className="border-t border-border bg-surface">
           <div className="mx-auto max-w-5xl px-6 py-20">
-            <h2 className="font-heading text-3xl text-foreground">Six rules, enforced by the linter</h2>
+            <h2 className="font-heading text-3xl text-foreground">Nine rules, enforced by the linter</h2>
             <p className="mt-3 max-w-xl font-body text-muted-foreground">
               Each rule targets one slop tell. Break one and{" "}
               <code className="font-accent text-sm text-foreground">npm run lint</code> fails.

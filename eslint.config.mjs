@@ -16,6 +16,9 @@ const eslintConfig = defineConfig([
       "slop-free/limited-emoji": "error",
       "slop-free/actionable-contact-info": "error",
       "slop-free/no-massive-shadows": "error",
+      "slop-free/specific-cta": "error",
+      "slop-free/no-shouty-quotes": "error",
+      "slop-free/no-fade-animations": "error",
     },
   },
   // Override default ignores of eslint-config-next.

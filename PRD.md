@@ -32,13 +32,16 @@ Kwabena himself. Others can borrow the rules, but v1 is built for his own speed 
 1. Project setup with Tailwind tokens and curated font pairings
 2. Supabase auth wired to designed login and signup screens
 3. Landing page that passes all rules
-4. Six lint rules:
+4. Nine lint rules:
    - **Typeface roles:** 2–3 font families max, each with a defined role (heading, body, accent/code); no hardcoded fonts outside tokens
    - **No purple gradients:** no purple stop in any linear, radial or conic gradient
    - **No nested cards**
    - **No emoji** (configurable limit, zero by default)
    - **Actionable contact info:** phone numbers, emails and links must be clickable
    - **No massive shadows:** nothing past `shadow-lg`; custom shadows blur 20px at most
+   - **Specific CTAs:** no stock labels like "Get started" or "Learn more" on buttons
+   - **Sentence-case testimonials:** no quotes in Title Case or ALL CAPS
+   - **No fade-in content:** page content doesn't fade in; overlays may
 5. Social-ready callouts: for each rule, the slop example, the rule, and the result
 
 ## Stretch goal (day 3, only if ahead)
