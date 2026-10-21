@@ -1,64 +1,10 @@
 import Link from "next/link";
 import { buttonStyles } from "@/components/button";
+import { RuleDetails } from "@/components/rule-details";
+import { RuleTour } from "@/components/rule-tour";
+import { ruleGroups, ruleNumber, rules } from "@/content/rules";
 
 const repoUrl = "https://github.com/KobeFrimpong20/slop-free-starter-kit";
-
-const rules = [
-  {
-    id: "typeface-roles",
-    name: "Typeface roles",
-    slop: "Inter for everything, set inline wherever a component needs it.",
-    rule: "Three families, three roles: heading, body, accent. Fonts come from tokens only.",
-  },
-  {
-    id: "no-purple-gradient",
-    name: "No purple gradients",
-    slop: "A purple-to-blue hero, and another one behind the call to action.",
-    rule: "Any gradient with purple in it, linear, radial or conic, fails the build.",
-  },
-  {
-    id: "no-nested-cards",
-    name: "No nested cards",
-    slop: "A card on a panel on a section, each with its own shadow and radius.",
-    rule: "A padded, rounded surface can't sit inside another one.",
-  },
-  {
-    id: "limited-emoji",
-    name: "No emoji",
-    slop: "A rocket in the headline, sparkles on the button, a heart by the testimonials.",
-    rule: "Zero emoji by default. Type and spacing carry the tone.",
-  },
-  {
-    id: "actionable-contact-info",
-    name: "Actionable contact info",
-    slop: "An email and phone number printed as plain text.",
-    rule: "Emails, phone numbers and URLs must be links people can tap.",
-  },
-  {
-    id: "no-massive-shadows",
-    name: "No massive shadows",
-    slop: "A button floating on a shadow-xl, cards hovering on 50px of blur.",
-    rule: "Nothing past shadow-lg. Custom shadows can blur 20px at most.",
-  },
-  {
-    id: "specific-cta",
-    name: "Specific calls to action",
-    slop: "Get Started Free, Learn More, and Submit on every button.",
-    rule: "Button labels say what happens next. Vague stock phrases fail.",
-  },
-  {
-    id: "no-shouty-quotes",
-    name: "Sentence-case testimonials",
-    slop: "\u201cThis Product Completely Transformed How We Work.\u201d",
-    rule: "Quotes in Title Case or all caps fail. People don\u2019t talk in headlines.",
-  },
-  {
-    id: "no-fade-animations",
-    name: "No fade-in content",
-    slop: "Every section fades up as you scroll, so a fast scroll skips past blank space.",
-    rule: "Page content shows immediately. Dialogs, menus and toasts may still fade.",
-  },
-];
 
 const included = [
   { name: "Design tokens", body: "Colours, type, and radii defined once in globals.css. Components use token names, never raw values." },
@@ -132,29 +78,29 @@ export default function Home() {
               <code className="font-accent text-sm text-foreground">npm run lint</code> fails.
             </p>
 
-            <ol className="mt-12 divide-y divide-border border-y border-border">
-              {rules.map((rule, i) => (
-                <li key={rule.id} className="grid gap-4 py-8 sm:grid-cols-[3rem_1fr_1fr] sm:gap-8">
-                  <span className="font-accent text-sm text-muted-foreground">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-heading text-xl text-foreground">{rule.name}</h3>
-                    <p className="mt-1 font-accent text-xs text-accent">slop-free/{rule.id}</p>
-                  </div>
-                  <dl className="flex flex-col gap-3 font-body text-sm">
-                    <div>
-                      <dt className="font-medium text-muted-foreground">The slop</dt>
-                      <dd className="mt-0.5 text-foreground">{rule.slop}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-medium text-muted-foreground">The rule</dt>
-                      <dd className="mt-0.5 text-foreground">{rule.rule}</dd>
-                    </div>
-                  </dl>
-                </li>
+            {/* Phones: the plain list, grouped. */}
+            <div className="mt-12 flex flex-col gap-10 md:hidden">
+              {ruleGroups.map((group) => (
+                <div key={group}>
+                  <h3 className="font-accent text-xs uppercase tracking-widest text-muted-foreground">{group}</h3>
+                  <ol className="mt-3 divide-y divide-border border-y border-border">
+                    {rules.map((rule, i) =>
+                      rule.group === group ? (
+                        <li key={rule.id} className="flex flex-col gap-4 py-6">
+                          <span className="font-accent text-sm text-muted-foreground">{ruleNumber(i)}</span>
+                          <RuleDetails rule={rule} />
+                        </li>
+                      ) : null,
+                    )}
+                  </ol>
+                </div>
               ))}
-            </ol>
+            </div>
+
+            {/* Tablets and up: the sticky, scroll-driven tour. */}
+            <div className="mt-12 hidden md:block">
+              <RuleTour rules={rules} groups={ruleGroups} />
+            </div>
           </div>
         </section>
 
