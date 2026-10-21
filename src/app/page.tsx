@@ -1,3 +1,5 @@
+import { Button } from "@/components/button";
+
 const neutralSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 const accentSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -74,12 +76,8 @@ export default function Home() {
       <section className="flex flex-col gap-4">
         <h2 className="font-heading text-2xl text-foreground">Shape &amp; interactive states</h2>
         <div className="flex flex-wrap items-center gap-4">
-          <button className="rounded-md bg-accent px-5 py-2.5 font-body text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover">
-            Primary action
-          </button>
-          <button className="rounded-md border border-border bg-surface px-5 py-2.5 font-body text-sm font-medium text-foreground transition-colors hover:bg-neutral-100">
-            Secondary action
-          </button>
+          <Button>Primary action</Button>
+          <Button variant="secondary">Secondary action</Button>
           <span className="rounded-sm bg-accent-subtle px-3 py-1 font-body text-xs font-medium text-accent-700">
             Soft tag
           </span>

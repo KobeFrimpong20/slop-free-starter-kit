@@ -47,7 +47,8 @@
   --color-border: var(--color-neutral-200);
 
   --color-accent: var(--color-accent-700);
-  --color-accent-hover: var(--color-accent-800);
+  --color-accent-hover: var(--color-accent-500); /* lighter on hover: dark fills can't get darker visibly */
+  --color-accent-active: var(--color-accent-800);
   --color-accent-subtle: var(--color-accent-50);
   --color-accent-foreground: #ffffff;
 
@@ -94,6 +95,7 @@
 
   --color-accent: var(--color-accent);
   --color-accent-hover: var(--color-accent-hover);
+  --color-accent-active: var(--color-accent-active);
   --color-accent-subtle: var(--color-accent-subtle);
   --color-accent-foreground: var(--color-accent-foreground);
 
