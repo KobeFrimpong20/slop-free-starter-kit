@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { logout } from "@/app/auth/actions";
+import { Button } from "@/components/button";
 import { createClient } from "@/lib/supabase/server";
 
 async function AccountDetails() {
@@ -16,12 +17,9 @@ async function AccountDetails() {
         Signed in as <span className="font-accent text-foreground">{user.email}</span>
       </p>
       <form action={logout}>
-        <button
-          type="submit"
-          className="rounded-md border border-border bg-surface px-5 py-2.5 font-body text-sm font-medium text-foreground transition-colors hover:bg-neutral-100"
-        >
+        <Button type="submit" variant="secondary">
           Log out
-        </button>
+        </Button>
       </form>
     </>
   );

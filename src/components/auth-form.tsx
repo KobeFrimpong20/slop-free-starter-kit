@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import type { AuthState } from "@/app/auth/actions";
+import { Button } from "@/components/button";
 
 type Props = {
   title: string;
@@ -66,13 +67,9 @@ export function AuthForm({
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={pending}
-          className="rounded-md bg-accent px-5 py-2.5 font-body text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-60"
-        >
+        <Button type="submit" disabled={pending}>
           {pending ? "Working…" : submitLabel}
-        </button>
+        </Button>
       </form>
 
       <p className="font-body text-sm text-muted-foreground">
