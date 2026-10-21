@@ -1,10 +1,22 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import slopFree from "./eslint-rules/index.mjs";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    files: ["**/*.{ts,tsx,jsx}"],
+    plugins: { "slop-free": slopFree },
+    rules: {
+      "slop-free/typeface-roles": "error",
+      "slop-free/no-purple-blue-gradient": "error",
+      "slop-free/no-nested-cards": "error",
+      "slop-free/limited-emoji": "error",
+      "slop-free/actionable-contact-info": "error",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
@@ -12,6 +24,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Deliberately sloppy sample used by the rule tests.
+    "eslint-rules/fixtures/**",
   ]),
 ]);
 
