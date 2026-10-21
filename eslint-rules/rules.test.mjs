@@ -69,13 +69,14 @@ tester.run("no-nested-cards", plugin.rules["no-nested-cards"], {
 
 tester.run("limited-emoji", plugin.rules["limited-emoji"], {
   valid: [
-    `const a = <h1>Launch 🚀</h1>;`,
+    `const a = <h1>Launch</h1>;`,
     `const a = <p>© 2026 Company ™</p>;`,
     { code: `const a = <p>🚀 ✨</p>;`, options: [{ max: 2 }] },
   ],
   invalid: [
-    { code: `const a = <p>🚀 ✨</p>;`, errors: [{ messageId: "tooMany" }] },
-    { code: `const a = <p>Hi ❤️</p>; const b = "🎉";`, errors: [{ messageId: "tooMany" }] },
+    { code: `const a = <h1>Launch 🚀</h1>;`, errors: [{ messageId: "none" }] },
+    { code: `const a = <p>Hi ❤️</p>; const b = "🎉";`, errors: [{ messageId: "none" }, { messageId: "none" }] },
+    { code: `const a = <p>🚀 ✨</p>;`, options: [{ max: 1 }], errors: [{ messageId: "tooMany" }] },
   ],
 });
 
