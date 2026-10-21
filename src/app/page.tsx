@@ -11,10 +11,10 @@ const rules = [
     rule: "Three families, three roles: heading, body, accent. Fonts come from tokens only.",
   },
   {
-    id: "no-purple-blue-gradient",
-    name: "No purple-to-blue gradients",
+    id: "no-purple-gradient",
+    name: "No purple gradients",
     slop: "A purple-to-blue hero, and another one behind the call to action.",
-    rule: "Gradients that pair a purple stop with a blue stop fail the build.",
+    rule: "Any gradient with purple in it, linear, radial or conic, fails the build.",
   },
   {
     id: "no-nested-cards",
@@ -34,13 +34,19 @@ const rules = [
     slop: "An email and phone number printed as plain text.",
     rule: "Emails, phone numbers and URLs must be links people can tap.",
   },
+  {
+    id: "no-massive-shadows",
+    name: "No massive shadows",
+    slop: "A button floating on a shadow-xl, cards hovering on 50px of blur.",
+    rule: "Nothing past shadow-lg. Custom shadows can blur 20px at most.",
+  },
 ];
 
 const included = [
   { name: "Design tokens", body: "Colours, type, and radii defined once in globals.css. Components use token names, never raw values." },
   { name: "Font pairing", body: "Lora for headings, Work Sans for body copy, IBM Plex Mono for code and data." },
   { name: "Supabase auth", body: "Login, signup, and email confirmation with server actions, plus a users table behind row-level security." },
-  { name: "Lint guardrails", body: "Five ESLint rules that catch the slop tells before they ship, with tests against a real slop baseline." },
+  { name: "Lint guardrails", body: "Six ESLint rules that catch the slop tells before they ship, with tests against a real slop baseline." },
 ];
 
 const steps = [
@@ -102,7 +108,7 @@ export default function Home() {
 
         <section id="rules" className="border-t border-border bg-surface">
           <div className="mx-auto max-w-5xl px-6 py-20">
-            <h2 className="font-heading text-3xl text-foreground">Five rules, enforced by the linter</h2>
+            <h2 className="font-heading text-3xl text-foreground">Six rules, enforced by the linter</h2>
             <p className="mt-3 max-w-xl font-body text-muted-foreground">
               Each rule targets one slop tell. Break one and{" "}
               <code className="font-accent text-sm text-foreground">npm run lint</code> fails.

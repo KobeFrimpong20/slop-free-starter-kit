@@ -11,10 +11,11 @@ const eslintConfig = defineConfig([
     plugins: { "slop-free": slopFree },
     rules: {
       "slop-free/typeface-roles": "error",
-      "slop-free/no-purple-blue-gradient": "error",
+      "slop-free/no-purple-gradient": "error",
       "slop-free/no-nested-cards": "error",
       "slop-free/limited-emoji": "error",
       "slop-free/actionable-contact-info": "error",
+      "slop-free/no-massive-shadows": "error",
     },
   },
   // Override default ignores of eslint-config-next.
