@@ -98,6 +98,32 @@ To add a rule:
 4. Add matching slop to the fixture.
 5. Add the rule's copy to `src/content/rules.ts` so it shows on the landing page.
 
+## Slop score
+
+```bash
+npm run slop-score                                   # scores src/
+npm run slop-score -- path/to/dir                    # any folder or file
+npm run slop-score -- src --json                     # machine-readable
+npm run slop-score -- src --max 20                   # exit 1 if the score is above 20
+```
+
+Runs the slop-free rules at their defaults and totals a weighted score, where **0 is clean** and the maximum is **100**. The weights live in `eslint-rules/score.mjs`.
+
+| Tell | Points |
+|---|---|
+| Title Case or ALL CAPS testimonials | +10, once |
+| Purple gradients | +10, once |
+| Massive shadows | +8, once |
+| Nested cards | +7, once |
+| Fade-in content | +4, once |
+| Unclickable contact info | +7 each |
+| Generic calls to action | +5 each |
+| Hardcoded fonts | +3 each |
+| Emoji | +2 each |
+| Font families loaded with `next/font` | +3 for each family under 3, +5 for each family over 3 |
+
+"Once" means the tell scores its points if it appears anywhere in the scanned folder. The slop baseline in `eslint-rules/fixtures` scores 80, and `src/` scores 0.
+
 ## Branches
 
 | Branch | Purpose |
@@ -118,4 +144,5 @@ CI (`.github/workflows/ci.yml`) runs lint, the rule tests and the build on every
 | `npm run dev` | Dev server |
 | `npm run build` | Production build, including type checking |
 | `npm run lint` | ESLint, including the slop-free rules |
-| `npm run test:rules` | Tests for the slop-free rules |
+| `npm run test:rules` | Tests for the slop-free rules and the score |
+| `npm run slop-score` | Weighted slop score, from 0 (clean) to 100 |
