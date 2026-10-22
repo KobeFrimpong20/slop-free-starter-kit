@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 // Usage: npm run slop-score -- [path] [--json] [--max <n>]
-// Lints [path] (default: src) with the slop-free rules at their defaults and
-// prints a 0-100 slop score. --max fails (exit 1) when the score is above n.
+// Lints [path] (default: src) with the slop-free rules at their defaults, runs
+// `impeccable detect` on it, and prints a 0-100 slop score, 2 points per tell
+// found. --max fails (exit 1) when the score is above n.
 
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { ESLint } from "eslint";
 import tsParser from "@typescript-eslint/parser";
@@ -68,10 +70,27 @@ for (const result of results) {
   }
 }
 
-const { score, raw, breakdown } = scoreFindings(findings, families.size);
+// Fixed flags for the same reason: project config and inline ignores don't
+// change the score, and advisories (soft hints) don't count.
+function impeccableDetect(dir) {
+  const bin = path.join(import.meta.dirname, "../node_modules/.bin/impeccable");
+  const argv = ["detect", "--json", "--no-config", "--no-advisory", dir];
+  try {
+    return JSON.parse(execFileSync(bin, argv, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] }));
+  } catch (err) {
+    // Exit 2 means the scan finished with findings; anything else is a failure.
+    if (err.status === 2) return JSON.parse(err.stdout);
+    throw new Error(`impeccable detect failed on ${dir}`, { cause: err });
+  }
+}
+
+const impeccableFindings = impeccableDetect(target);
+
+const { score, raw, breakdown } = scoreFindings(findings, families.size, impeccableFindings);
 
 if (json) {
-  console.log(JSON.stringify({ target, score, raw, families: [...families], breakdown, findings }, null, 2));
+  const impeccable = impeccableFindings.map((f) => ({ ...f, file: path.relative(process.cwd(), f.file) }));
+  console.log(JSON.stringify({ target, score, raw, families: [...families], breakdown, findings, impeccable }, null, 2));
 } else {
   const rows = breakdown.filter((b) => b.points > 0);
   console.log(`\nSlop score for ${target}: ${score}/100${raw > score ? ` (raw ${raw}, capped)` : ""}`);
@@ -79,12 +98,14 @@ if (json) {
   if (rows.length) {
     const width = Math.max(...rows.map((r) => r.label.length));
     for (const r of rows) {
-      const how = r.mode === "once" ? "once" : r.mode === "each" ? `x${r.count}` : "";
-      console.log(`  ${r.label.padEnd(width)}  ${how.padStart(4)}  +${r.points}`);
+      console.log(`  ${r.label.padEnd(width)}  +${r.points}`);
     }
-    if (findings.length) {
+    if (findings.length || impeccableFindings.length) {
       console.log("\nFindings:");
       for (const f of findings) console.log(`  ${f.file}:${f.line}  ${f.ruleId}  ${f.message}`);
+      for (const f of impeccableFindings) {
+        console.log(`  ${path.relative(process.cwd(), f.file)}:${f.line}  impeccable/${f.antipattern}  ${f.snippet}`);
+      }
     }
     console.log();
   }
