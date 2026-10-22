@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:rules": "node --test \"eslint-rules/**/*.test.mjs\"",
-    "slop-score": "node scripts/slop-score.mjs"
+    "slop-score": "node scripts/slop-score.mjs",
+    "design:check": "node scripts/design-check.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "impeccable": "^4.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

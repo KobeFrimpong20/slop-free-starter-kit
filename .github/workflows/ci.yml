@@ -28,3 +28,6 @@ jobs:
         run: npm run slop-score
       - name: Typecheck and build
         run: npm run build
+      # Scans src/ and the built pages with the Impeccable detector; fails on findings.
+      - name: Design check
+        run: npm run design:check
