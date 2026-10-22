@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:rules": "node --test \"eslint-rules/**/*.test.mjs\"",
-    "slop-score": "node scripts/slop-score.mjs"
+    "slop-score": "node scripts/slop-score.mjs",
+    "design:check": "node scripts/design-check.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

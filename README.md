@@ -125,6 +125,30 @@ Tells:
 
 The slop baseline in `eslint-rules/fixtures` scores 20, and `src/` scores 0.
 
+## Design direction (Impeccable)
+
+The lint rules catch specific tells. For design direction, the kit ships the [Impeccable](https://github.com/pbakaus/impeccable) skill for Claude Code in `.claude/skills/impeccable`. Agents load it automatically for UI work, and `AGENTS.md` sets the workflow.
+
+| File | What it holds |
+|---|---|
+| `PRODUCT.md` | Product context: users, purpose, constraints, evidence that must not be invented |
+| `DESIGN.md` | The visual system: tokens, type roles, components, do's and don'ts |
+| `.claude/settings.json` | Hooks that run the detector after each edit and at the end of a session |
+
+Useful commands in Claude Code: `/impeccable shape <feature>` before building, then `critique`, `audit` and `polish` after. `/impeccable document` refreshes `DESIGN.md` when the system changes.
+
+### Design check
+
+```bash
+npm run build
+npm run design:check                                  # starts the built app and scans it
+npm run design:check -- --url http://localhost:3000   # scan a server that's already running
+```
+
+This runs the Impeccable detector over `src/` and over `/`, `/login`, `/signup` and `/tokens` at desktop (1280×800) and phone (390×844) widths. It exits 2 on findings and fails CI. The rendered scan catches problems the lint rules can't see, such as low contrast, text under 11px and AI-style hero layouts. When a finding contradicts a deliberate choice in `DESIGN.md`, add an ignore with `npx impeccable ignores` or an inline disable comment, and give the reason.
+
+The detector downloads a platform binary on first run (gitignored), which requires network access. Telemetry is off in `design:check`; to turn it off for your own runs, use `npx impeccable telemetry off`. Update the skill with `npx impeccable update`.
+
 ## Branches
 
 | Branch | Purpose |
@@ -136,7 +160,7 @@ The slop baseline in `eslint-rules/fixtures` scores 20, and `src/` scores 0.
 
 The flow is `feature/*`, then a PR into `uat`, then testing, then a PR from `uat` into `main`.
 
-CI (`.github/workflows/ci.yml`) runs lint, the rule tests and the build on every push to `main`, `uat` and `feature/**`, and on every pull request into `main` or `uat`.
+CI (`.github/workflows/ci.yml`) runs lint, the rule tests, the slop score, the build and the design check on every push to `main`, `uat` and `feature/**`, and on every pull request into `main` or `uat`.
 
 ## Scripts
 
@@ -147,3 +171,4 @@ CI (`.github/workflows/ci.yml`) runs lint, the rule tests and the build on every
 | `npm run lint` | ESLint, including the slop-free rules |
 | `npm run test:rules` | Tests for the slop-free rules and the score |
 | `npm run slop-score` | Slop score, 2 points per tell found (lint rules and Impeccable), from 0 (clean) to 100 |
+| `npm run design:check` | Impeccable detector over `src/` and the built pages |
