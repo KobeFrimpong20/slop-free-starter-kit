@@ -86,7 +86,7 @@ The system is flat and quiet. Surfaces are separated by hairline borders and ton
 A warm-gray paper palette with a single deep navy ink.
 
 ### Primary
-- **Editorial Navy** (accent-700): the only accent. Primary buttons, links, progress bars and small mono callouts. Its rarity is what makes it read as an action.
+- **Editorial Navy** (accent-700): the only accent. Primary buttons, links and small mono callouts. Its rarity is what makes it read as an action.
 - **Navy Hover** (accent-500): primary button hover. It lightens on hover because the dark fill can't get visibly darker.
 - **Navy Pressed** (accent-800): primary button active state.
 - **Navy Wash** (accent-50): secondary hover fills and soft tags.
@@ -127,7 +127,7 @@ The full 50–950 ramps for both families live in `src/app/globals.css` and are 
 
 ## Layout
 
-A single centred column with a 24px gutter (`px-6`). Width follows the job: `max-w-5xl` for the landing page, `max-w-3xl` for reference pages, `max-w-sm` for auth forms. Sections are spaced generously (`pt-24`/`pb-20`, with `sm:pt-32` on the hero), and stacks use flex gaps rather than margins. The rule tour switches to a three-column grid (`4rem 1fr 1fr`) at `md`, and every layout collapses to one column on phones. Paragraphs use `text-wrap: pretty` so a single word doesn't sit alone on the last line.
+A single centred column with a 24px gutter (`px-6`). Width follows the job: `max-w-5xl` for the landing page, `max-w-3xl` for reference pages, `max-w-sm` for auth forms. Sections are spaced generously (`pt-24`/`pb-20`, with `sm:pt-32` on the hero), and stacks use flex gaps rather than margins. The FAQ puts its heading beside the questions (`1fr 2fr`) at `md`, and every layout collapses to one column on phones. Paragraphs use `text-wrap: pretty` so a single word doesn't sit alone on the last line.
 
 ## Elevation & Depth
 
@@ -167,8 +167,11 @@ Confident and plain. Use `<Button>` or `buttonStyles()` from `src/components/but
 - **Style:** White Sheet fill, 1px hairline border, 6px radius, Work Sans 1rem, with labels in Work Sans 0.875rem medium above the field.
 - **Focus:** the border turns Editorial Navy.
 
-### Rule Tour (signature)
-A tabbed walkthrough of the slop rules: a mono rule number, the slop next to the fix, and a thin navy progress bar on a hairline track. It is the model for presenting before-and-after content.
+### FAQ accordion
+Native `<details>` elements sharing `name="faq"`, so the browser keeps one answer open at a time with no JavaScript. The first answer starts open.
+- **Rows:** hairline dividers between questions, no surface or fill.
+- **Question:** Lora 1.25rem graphite, turning navy on hover, with a muted chevron that rotates when open.
+- **Answer:** Work Sans in Pencil Gray, capped at `max-w-prose`, with code in IBM Plex Mono.
 
 ## Do's and Don'ts
 

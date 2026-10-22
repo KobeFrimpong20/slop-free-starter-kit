@@ -1,8 +1,7 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { buttonStyles } from "@/components/button";
-import { RuleDetails } from "@/components/rule-details";
-import { RuleTour } from "@/components/rule-tour";
-import { ruleGroups, ruleNumber, rules } from "@/content/rules";
+import { rules } from "@/content/rules";
 
 const repoUrl = "https://github.com/KobeFrimpong20/slop-free-starter-kit";
 
@@ -23,6 +22,89 @@ const steps = [
   { label: "Check for slop", command: "npm run lint" },
 ];
 
+function Code({ children }: { children: ReactNode }) {
+  return <code className="font-accent text-sm text-foreground">{children}</code>;
+}
+
+const faqs: { question: string; answer: ReactNode }[] = [
+  {
+    question: "What does the kit check for?",
+    answer: (
+      <>
+        <p>Two things. Nine ESLint rules in <Code>eslint-rules/</Code>, one per slop tell:</p>
+        <ul className="mt-3 grid gap-x-8 gap-y-1 sm:grid-cols-2">
+          {rules.map((rule) => (
+            <li key={rule.id}>{rule.name}</li>
+          ))}
+        </ul>
+        <p className="mt-3">
+          And the Impeccable detector, which looks for broader design problems such as low contrast, tiny text and
+          generic hero layouts.
+        </p>
+      </>
+    ),
+  },
+  {
+    question: "How is the slop score worked out?",
+    answer: (
+      <p>
+        <Code>npm run slop-score</Code> runs the nine rules and Impeccable, then adds 2 points for each tell it finds.
+        A tell counts once whether it shows up one time or fifty. Loading more or fewer than three font families also
+        counts as a tell. 0 is clean, and the score is capped at 100.
+      </p>
+    ),
+  },
+  {
+    question: "How is the design check different from the linter?",
+    answer: (
+      <p>
+        The linter reads your source code. <Code>npm run design:check</Code> runs Impeccable over <Code>src/</Code> and
+        over the built pages at desktop and phone widths, so it catches what only shows up once a page renders, such
+        as text contrast and text under 11px.
+      </p>
+    ),
+  },
+  {
+    question: "What happens in CI?",
+    answer: (
+      <p>
+        Every push and pull request runs lint, the rule tests, the slop score, the build and the design check. Lint,
+        the tests, the build and the design check fail the run when they find something. The slop score is reported
+        without failing; add <Code>--max</Code> to make it a gate, for example <Code>npm run slop-score -- --max 10</Code>.
+      </p>
+    ),
+  },
+  {
+    question: "Can I turn a rule off?",
+    answer: (
+      <p>
+        Yes. Set it to <Code>&quot;off&quot;</Code> in <Code>eslint.config.mjs</Code>. The slop score still runs every
+        rule at its defaults, so it stays comparable between projects.
+      </p>
+    ),
+  },
+  {
+    question: "Can I use different fonts?",
+    answer: (
+      <p>
+        Yes. Swap the families in <Code>src/app/layout.tsx</Code> and keep one each for headings, body and accent.
+        Components use the <Code>font-heading</Code>, <Code>font-body</Code> and <Code>font-accent</Code> classes, so
+        nothing else changes.
+      </p>
+    ),
+  },
+  {
+    question: "Does it work with AI coding agents?",
+    answer: (
+      <p>
+        That&rsquo;s what it&rsquo;s for. <Code>AGENTS.md</Code> tells agents to run the checks before calling UI work
+        done, and the Impeccable skill for Claude Code ships in <Code>.claude/skills</Code>, with hooks that run the
+        detector after each edit.
+      </p>
+    ),
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -32,8 +114,8 @@ export default function Home() {
             Production Launchpad
           </Link>
           <div className="flex items-center gap-6 font-body text-sm">
-            <a href="#rules" className="hidden text-muted-foreground hover:text-foreground sm:inline">
-              Rules
+            <a href="#faq" className="hidden text-muted-foreground hover:text-foreground sm:inline">
+              FAQ
             </a>
             <a href="#get-started" className="hidden text-muted-foreground hover:text-foreground sm:inline">
               Get started
@@ -67,36 +149,31 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="rules" className="border-t border-border bg-surface">
-          <div className="mx-auto max-w-5xl px-6 py-20">
-            <h2 className="font-heading text-3xl text-foreground">Nine rules, enforced by the linter</h2>
-            <p className="mt-3 max-w-xl font-body text-muted-foreground">
-              Each rule targets one slop tell. Break one and{" "}
-              <code className="font-accent text-sm text-foreground">npm run lint</code> fails.
-            </p>
-
-            {/* Phones: the plain list, grouped. */}
-            <div className="mt-12 flex flex-col gap-10 md:hidden">
-              {ruleGroups.map((group) => (
-                <div key={group}>
-                  <h3 className="font-accent text-xs uppercase tracking-widest text-muted-foreground">{group}</h3>
-                  <ol className="mt-3 divide-y divide-border border-y border-border">
-                    {rules.map((rule, i) =>
-                      rule.group === group ? (
-                        <li key={rule.id} className="flex flex-col gap-4 py-6">
-                          <span className="font-accent text-sm text-muted-foreground">{ruleNumber(i)}</span>
-                          <RuleDetails rule={rule} />
-                        </li>
-                      ) : null,
-                    )}
-                  </ol>
-                </div>
+        <section id="faq" className="border-t border-border bg-surface">
+          <div className="mx-auto grid max-w-5xl gap-10 px-6 py-20 md:grid-cols-[1fr_2fr] md:gap-16">
+            <h2 className="font-heading text-3xl text-foreground">Questions</h2>
+            {/* A shared name keeps one answer open at a time. */}
+            <div className="divide-y divide-border border-y border-border">
+              {faqs.map((faq, i) => (
+                <details key={faq.question} name="faq" open={i === 0} className="group">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-heading text-xl text-foreground hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&::-webkit-details-marker]:hidden">
+                    {faq.question}
+                    <svg
+                      viewBox="0 0 16 16"
+                      aria-hidden="true"
+                      className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M4 6l4 4 4-4" />
+                    </svg>
+                  </summary>
+                  <div className="max-w-prose pb-6 font-body text-muted-foreground">{faq.answer}</div>
+                </details>
               ))}
-            </div>
-
-            {/* Tablets and up: the sticky, scroll-driven tour. */}
-            <div className="mt-12 hidden md:block">
-              <RuleTour rules={rules} groups={ruleGroups} />
             </div>
           </div>
         </section>

@@ -26,7 +26,7 @@ The kit enforces taste mechanically. Specific AI-slop tells are turned into ESLi
 
 - Work happens in an AI coding agent. The rules, `npm run lint`, `npm run slop-score` and `npm run design:check` are the feedback loop.
 - CI runs the same checks on every push and pull request.
-- Each lint rule has a social-ready callout (the slop, the rule, the result) in `src/content/rules.ts`, shown on the landing page.
+- Each lint rule has a social-ready callout (the slop, the rule, the result) in `src/content/rules.ts`. The landing page FAQ lists the rules by name.
 
 ## Capabilities and Constraints
 

@@ -10,7 +10,7 @@ export type Rule = {
   rule: string;
 };
 
-// Ordered by group; the tour and the list number rules in this order.
+// Ordered by group; the landing page FAQ lists rules in this order.
 export const rules: Rule[] = [
   {
     id: "typeface-roles",
@@ -76,5 +76,3 @@ export const rules: Rule[] = [
     rule: "Page content shows immediately. Dialogs, menus and toasts may still fade.",
   },
 ];
-
-export const ruleNumber = (i: number) => String(i + 1).padStart(2, "0");
