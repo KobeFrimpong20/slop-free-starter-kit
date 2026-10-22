@@ -30,6 +30,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Deliberately sloppy sample used by the rule tests.
     "eslint-rules/fixtures/**",
+    // Vendored Impeccable skill scripts.
+    ".claude/**",
   ]),
 ]);
 

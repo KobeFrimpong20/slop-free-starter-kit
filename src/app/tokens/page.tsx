@@ -7,14 +7,11 @@ export default function Home() {
   return (
     <main className="mx-auto flex max-w-3xl flex-1 flex-col gap-16 px-6 py-24">
       <header className="flex flex-col gap-3">
-        <p className="font-accent text-xs uppercase tracking-widest text-muted-foreground">
-          Design tokens
-        </p>
         <h1 className="font-heading text-5xl text-foreground">
-          Production Launchpad
+          Design tokens
         </h1>
         <p className="max-w-lg font-body text-lg text-muted-foreground">
-          A token preview, not the landing page. Heading, body, and accent
+          Production Launchpad&rsquo;s token preview, not the landing page. Heading, body, and accent
           type, plus the neutral and accent color ramps, so we can eyeball
           the system before building real screens.
         </p>
@@ -46,10 +43,10 @@ export default function Home() {
               className="flex h-16 items-end justify-center pb-1"
               style={{
                 backgroundColor: `var(--color-neutral-${step})`,
-                color: step >= 500 ? "var(--color-neutral-50)" : "var(--color-neutral-700)",
+                color: step >= 500 ? "var(--color-neutral-50)" : "var(--color-neutral-950)",
               }}
             >
-              <span className="font-accent text-[10px]">{step}</span>
+              <span className="font-accent text-xs">{step}</span>
             </div>
           ))}
         </div>
@@ -64,10 +61,10 @@ export default function Home() {
               className="flex h-16 items-end justify-center pb-1"
               style={{
                 backgroundColor: `var(--color-accent-${step})`,
-                color: step >= 500 ? "var(--color-accent-50)" : "var(--color-accent-700)",
+                color: step >= 500 ? "var(--color-accent-50)" : "var(--color-accent-950)",
               }}
             >
-              <span className="font-accent text-[10px]">{step}</span>
+              <span className="font-accent text-xs">{step}</span>
             </div>
           ))}
         </div>

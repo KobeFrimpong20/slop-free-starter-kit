@@ -50,10 +50,7 @@ export default function Home() {
 
       <main className="flex-1">
         <section className="mx-auto max-w-5xl px-6 pb-20 pt-24 sm:pt-32">
-          <p className="font-accent text-xs uppercase tracking-widest text-muted-foreground">
-            Next.js starter kit
-          </p>
-          <h1 className="mt-4 max-w-3xl font-heading text-5xl leading-tight text-foreground sm:text-6xl">
+          <h1 className="max-w-3xl font-heading text-5xl leading-tight text-foreground sm:text-6xl">
             Ship pages that don&rsquo;t look generated.
           </h1>
           <p className="mt-6 max-w-xl font-body text-lg text-muted-foreground">

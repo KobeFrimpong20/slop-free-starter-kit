@@ -108,3 +108,8 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
 }
+
+/* Keeps a lone word off the last line of paragraphs. */
+p {
+  text-wrap: pretty;
+}
