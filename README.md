@@ -107,22 +107,23 @@ npm run slop-score -- src --json                     # machine-readable
 npm run slop-score -- src --max 20                   # exit 1 if the score is above 20
 ```
 
-Runs the slop-free rules at their defaults and totals a weighted score, where **0 is clean** and the maximum is **100**. The weights live in `eslint-rules/score.mjs`.
+Runs the slop-free rules at their defaults plus `impeccable detect`, and scores **2 points for each tell found**, where **0 is clean** and the cap is **100**. A tell counts once whether it appears one time or fifty, so the score says which tells are present, not how often. The finding count for each tell is still in the `--json` breakdown. The scoring lives in `eslint-rules/score.mjs`.
 
-| Tell | Points |
-|---|---|
-| Title Case or ALL CAPS testimonials | +10, once |
-| Purple gradients | +10, once |
-| Massive shadows | +8, once |
-| Nested cards | +7, once |
-| Fade-in content | +4, once |
-| Unclickable contact info | +7 each |
-| Generic calls to action | +5 each |
-| Hardcoded fonts | +3 each |
-| Emoji | +2 each |
-| Font families loaded with `next/font` | +3 for each family under 3, +5 for each family over 3 |
+Tells:
 
-"Once" means the tell scores its points if it appears anywhere in the scanned folder. The slop baseline in `eslint-rules/fixtures` scores 80, and `src/` scores 0.
+- Title Case or ALL CAPS testimonials
+- Purple gradients
+- Massive shadows
+- Nested cards
+- Fade-in content
+- Unclickable contact info
+- Generic calls to action
+- Hardcoded fonts
+- Emoji
+- Font families loaded with `next/font` other than exactly 3
+- Every [Impeccable](https://impeccable.style/slop) detector rule, each its own tell. It runs with `--no-config --no-advisory`, so project ignores don't hide findings and advisories don't count.
+
+The slop baseline in `eslint-rules/fixtures` scores 20, and `src/` scores 0.
 
 ## Branches
 
@@ -145,4 +146,4 @@ CI (`.github/workflows/ci.yml`) runs lint, the rule tests and the build on every
 | `npm run build` | Production build, including type checking |
 | `npm run lint` | ESLint, including the slop-free rules |
 | `npm run test:rules` | Tests for the slop-free rules and the score |
-| `npm run slop-score` | Weighted slop score, from 0 (clean) to 100 |
+| `npm run slop-score` | Slop score, 2 points per tell found (lint rules and Impeccable), from 0 (clean) to 100 |
