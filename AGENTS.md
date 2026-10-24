@@ -8,6 +8,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Product requirements
+
+Work is scoped by PRDs in the repo root. Read the active one before starting a task.
+
+- **`PRD_2_Billing.md` is the active work:** idempotent Stripe billing, plus pricing and FAQ sections on the landing page.
+- **`PRD_1_Design_GuardRails.md` is complete, and its design rules always apply.** Every UI change, including billing pages and the pricing section, follows the design guardrails below.
+- **Check work against PRD 2's definition of done** before calling it finished. That includes all four idempotency tests: duplicate events, a forced failure then retry, out-of-order events, and the concurrent race. Each must leave exactly one correct row and the correct final state.
+- **PRD 2's out of scope list is binding.** Don't build, stub or suggest anything on it (multi-tenancy, trials, proration, plan upgrades, queues, external logging, booking logic, a guest purchase lookup page). If a task seems to need one, stop and ask.
+
 ## Frontend design
 
 Use the Impeccable skill (`.claude/skills/impeccable`) for any UI work. `PRODUCT.md` records product context and `DESIGN.md` records the visual system. Read both before designing.

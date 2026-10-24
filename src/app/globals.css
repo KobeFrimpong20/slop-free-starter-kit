@@ -8,7 +8,7 @@
 */
 
 :root {
-  /* ---- Typeface roles (2 families + 1 mono accent, per PRD rule 1) ---- */
+  /* ---- Typeface roles (2 families + 1 mono accent, per PRD 1, rule 1) ---- */
   --font-heading: var(--font-lora), ui-serif, Georgia, serif;
   --font-body: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
   --font-accent: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
